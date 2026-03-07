@@ -3,6 +3,7 @@
 // To add your API: add a println in printMenu() and a case in the switch below.
 
 import java.util.Scanner;
+import apis.*;
 
 public class Main {
 
@@ -29,7 +30,7 @@ public class Main {
                 case "1":  printNotImplemented(choice); break;
                 case "2":  printNotImplemented(choice); break;
                 case "3":  printNotImplemented(choice); break;
-                case "4":  printNotImplemented(choice); break;
+                case "4":  CreateEvent.Client_CreateEvent(scanner); break;
                 case "5":  printNotImplemented(choice); break;
                 case "6":  printNotImplemented(choice); break;
                 case "7":  printNotImplemented(choice); break;
