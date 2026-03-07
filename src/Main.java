@@ -1,8 +1,12 @@
+// Main.java
+// This is the driver program. It shows the menu and calls the right API.
+// To add your API: add a println in printMenu() and a case in the switch below.
+
 import java.util.Scanner;
 
 public class Main {
 
-    // scanner is shared so we dont make a new one every time
+    // shared scanner so we dont make a new one every time
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -17,27 +21,31 @@ public class Main {
             printMenu();
             String choice = scanner.nextLine().trim();
 
-            // call the right API based on what the user typed
             switch (choice) {
 
-                // Charith
-                case "1":
-                case "2":
-                case "3":
-                    printNotImplemented(choice);
-                    break;
-                case "4":  CreateEvent.Client_CreateEvent(scanner);                     break;
-                case "5":
-                case "6":
-                case "7":
-                case "8":
-                    printNotImplemented(choice);
-                    break;
+                // --- Charith's APIs ---
+                // TODO: replace printNotImplemented(choice) with your function call
+                // example: case "1": GetPlayerLeaderboard.Client_GetPlayerLeaderboard(scanner); break;
+                case "1":  printNotImplemented(choice); break;
+                case "2":  printNotImplemented(choice); break;
+                case "3":  printNotImplemented(choice); break;
+                case "4":  printNotImplemented(choice); break;
+                case "5":  printNotImplemented(choice); break;
+                case "6":  printNotImplemented(choice); break;
+                case "7":  printNotImplemented(choice); break;
+                case "8":  printNotImplemented(choice); break;
 
-                // TODO: add other teammates APIs here as they finish them
-                // case "9": Enes stuff
-                // case "10": Vincent stuff
-                // etc
+                // --- Enes's APIs ---
+                // TODO: add cases 9-18 and call Enes's Client functions here
+
+                // --- Vincent's APIs ---
+                // TODO: add cases and call Vincent's Client functions here
+
+                // --- Gisele's APIs ---
+                // TODO: add cases and call Gisele's Client functions here
+
+                // --- Shreyas's APIs ---
+                // TODO: add cases and call Shreyas's Client functions here
 
                 case "0":
                     System.out.println("Goodbye!");
@@ -52,9 +60,11 @@ public class Main {
         scanner.close();
     }
 
-    // just prints the menu options
+    // add your API name here so it shows up in the menu
     private static void printMenu() {
         System.out.println("\n--- API Menu ---");
+
+        // Charith
         System.out.println("1.  Get Player Leaderboard");
         System.out.println("2.  Get Top Players By Level");
         System.out.println("3.  Search Players");
@@ -63,10 +73,20 @@ public class Main {
         System.out.println("6.  Get Player Event Cooldown");
         System.out.println("7.  Use Ability");
         System.out.println("8.  Get Ability Cooldowns");
+
+        // TODO: Enes -- add your API names here
+
+        // TODO: Vincent -- add your API names here
+
+        // TODO: Gisele -- add your API names here
+
+        // TODO: Shreyas -- add your API names here
+
         System.out.println("0.  Quit");
         System.out.print("Enter choice: ");
     }
 
+    // placeholder until an API is implemented
     private static void printNotImplemented(String choice) {
         System.out.println("Option " + choice + " is not implemented yet.");
     }
