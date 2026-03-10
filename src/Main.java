@@ -24,16 +24,14 @@ public class Main {
             switch (choice) {
 
                 // --- Charith's APIs ---
-                // TODO: replace printNotImplemented(choice) with your function call
-                // example: case "1": GetPlayerLeaderboard.Client_GetPlayerLeaderboard(scanner); break;
-                case "1":  printNotImplemented(choice); break;
-                case "2":  printNotImplemented(choice); break;
-                case "3":  printNotImplemented(choice); break;
-                case "4":  CreateEvent.Client_CreateEvent(scanner); break;
-                case "5":  printNotImplemented(choice); break;
-                case "6":  printNotImplemented(choice); break;
-                case "7":  printNotImplemented(choice); break;
-                case "8":  printNotImplemented(choice); break;
+                case "1": GetPlayerLeaderboard.Client_GetPlayerLeaderboard(scanner);   break;
+                case "2": GetTopPlayersByLevel.Client_GetTopPlayersByLevel(scanner);   break;
+                case "3": SearchPlayers.Client_SearchPlayers(scanner);                 break;
+                case "4": CreateEvent.Client_CreateEvent(scanner);                     break;
+                case "5": GetActiveEvents.Client_GetActiveEvents(scanner);             break;
+                case "6": GetPlayerEventCooldown.Client_GetPlayerEventCooldown(scanner); break;
+                case "7": UseAbility.Client_UseAbility(scanner);                       break;
+                case "8": GetAbilityCooldowns.Client_GetAbilityCooldowns(scanner);     break;
 
                 // --- Enes's APIs ---
                 // TODO: add cases 9-18 and call Enes's Client functions here

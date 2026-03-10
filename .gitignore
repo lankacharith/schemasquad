@@ -1,1 +1,7 @@
-out/*.class
+# Compiled output — everyone builds locally
+out/
+
+# Optional: uncomment if you don't want to commit IDE config
+# .idea/
+# *.iml
+# .vscode/
