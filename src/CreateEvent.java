@@ -57,7 +57,7 @@ public class CreateEvent {
         } catch (SQLException e) {
             // "23505" is the standard PostgreSQL state code for a unique_violation
             if ("23505".equals(e.getSQLState())) {
-                return "Error: An event named '" + name + "' already exists.";
+                return "Unique Violation! The database says: " + e.getMessage();
             }
             return "Database error: " + e.getMessage();
         }
