@@ -3,15 +3,9 @@
 // To add your API: add a println in printMenu() and a case in the switch below.
 
 import java.util.Scanner;
-
-import charithapis.CreateEvent;
-import charithapis.GetAbilityCooldowns;
-import charithapis.GetActiveEvents;
-import charithapis.GetPlayerEventCooldown;
-import charithapis.GetPlayerLeaderboard;
-import charithapis.GetTopPlayersByLevel;
-import charithapis.SearchPlayers;
-import charithapis.UseAbility;
+import dbconnection.DBConnection;
+import charithapis.*;
+import vincentapis.*;
 
 public class Main {
 
@@ -46,8 +40,18 @@ public class Main {
                 // TODO: add cases 9-18 and call Enes's Client functions here
 
                 // --- Vincent's APIs ---
-                // TODO: add cases and call Vincent's Client functions here
-
+                case "9": GetPartyMembers.Client_GetPartyMembers(scanner);              break;
+                case "10": CreateParty.Client_CreateParty(scanner);                     break;
+                case "11": GetAllParties.Client_GetAllParties(scanner);                 break;
+                case "12": AddPlayerToParty.Client_AddPlayerToParty(scanner);           break;
+                case "13": RemovePlayerFromParty.Client_RemovePlayerFromParty(scanner); break;
+                case "14": GetPartySuggestions.Client_GetPartySuggestions(scanner);     break;
+                case "15": SearchTeams.Client_SearchTeams(scanner);                     break;
+                case "16": CreateTeam.Client_CreateTeam(scanner);                       break;
+                case "17": AddPlayerToTeam.Client_AddPlayerToTeam(scanner);             break;
+                case "18": RemovePlayerFromTeam.Client_RemovePlayerFromTeam(scanner);   break;
+                case "19": GetTeamDetails.Client_GetTeamDetails(scanner);               break;
+                case "20": UpdateTeamRank.Client_UpdateTeamRank(scanner);               break;
                 // --- Gisele's APIs ---
                 // TODO: add cases and call Gisele's Client functions here
 
@@ -56,6 +60,7 @@ public class Main {
 
                 case "0":
                     System.out.println("Goodbye!");
+                    dbconnection.DBConnection.shutdown(); // close the connection pool when quitting
                     running = false;
                     break;
 
@@ -84,6 +89,18 @@ public class Main {
         // TODO: Enes -- add your API names here
 
         // TODO: Vincent -- add your API names here
+        System.out.println("9.  Get Party Members");
+        System.out.println("10. Create Party");
+        System.out.println("11. Get All Parties");
+        System.out.println("12. Add Player To Party");
+        System.out.println("13. Remove Player From Party");
+        System.out.println("14. Get Party Suggestions");
+        System.out.println("15. Search Teams");
+        System.out.println("16. Create Team");
+        System.out.println("17. Add Player To Team");
+        System.out.println("18. Remove Player From Team");
+        System.out.println("19. Get Team Details");
+        System.out.println("20. Update Team Rank");
 
         // TODO: Gisele -- add your API names here
 
