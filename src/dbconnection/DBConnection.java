@@ -1,32 +1,41 @@
 package dbconnection;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-
-    // Added ?sslmode=require to the end of the URL
-    private static final String URL      = "jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require";
-    private static final String USER     = "postgres.pmpbhslcpywhqpmcflmw";
+    private static final String URL = "jdbc:postgresql://db.pmpbhslcpywhqpmcflmw.supabase.co:5432/postgres?sslmode=require";
+    private static final String USER = "postgres";
     private static final String PASSWORD = "TheSchemaSquad123";
 
+    // hold the one single connection in memory
+    private static Connection singleConn = null;
+    //  neutralize the constructor to prevent creating multiple instances of DBConnection
+    public DBConnection() {
+    }
+
     public static Connection getConnection() throws SQLException {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error: PostgreSQL JDBC Driver not found! Make sure the .jar file is in this directory.");
-            e.printStackTrace();
-            return null;
+        // only make a new network connection if one doesn't exist or got severed
+        if (singleConn == null || singleConn.isClosed()) {
+            singleConn = DriverManager.getConnection(URL, USER, PASSWORD);
         }
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        
+        // return the already open connection
+        return singleConn;
     }
 
     public static void closeConnection(Connection conn) {
-        if (conn != null) {
+        // deliberately do nothing here to not break existing APIs.
+    }
+    
+    // only call this when the entire java application is shutting down
+    public static void shutdown() {
+        if (singleConn != null) {
             try {
-                conn.close();
+                singleConn.close();
             } catch (SQLException e) {
-                System.out.println("Error closing connection: " + e.getMessage());
+                System.out.println("error closing connection: " + e.getMessage());
             }
         }
     }
