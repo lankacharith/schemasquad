@@ -116,7 +116,8 @@ public class AddPlayerToTeam {
                 "FROM \n" +
                 "    Team \n" +
                 "WHERE \n" +
-                "    Name = ?";
+                "    Name = ? \n"
+                + "FOR UPDATE"; // locks the selected team row so nobody else can read or write it
                 
             checkTeamStmt = conn.prepareStatement(teamSql);
             checkTeamStmt.setString(1, teamName);

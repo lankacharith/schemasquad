@@ -91,7 +91,8 @@ public class AddPlayerToParty {
                 "FROM \n" +
                 "    Party \n" +
                 "WHERE \n" +
-                "    JoinCode = ?";
+                "    JoinCode = ? \n" +
+                "FOR UPDATE"; // locks the selected party row so nobody else can read or write it
                 
             checkPartyStmt = conn.prepareStatement(partySql);
             checkPartyStmt.setString(1, joinCode);
