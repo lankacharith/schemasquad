@@ -46,12 +46,12 @@ public class Main {
                 case "12": AddPlayerToParty.Client_AddPlayerToParty(scanner);           break;
                 case "13": RemovePlayerFromParty.Client_RemovePlayerFromParty(scanner); break;
                 case "14": GetPartySuggestions.Client_GetPartySuggestions(scanner);     break;
-                case "15": SearchTeams.Client_SearchTeams(scanner);                     break;
-                case "16": CreateTeam.Client_CreateTeam(scanner);                       break;
-                case "17": AddPlayerToTeam.Client_AddPlayerToTeam(scanner);             break;
-                case "18": RemovePlayerFromTeam.Client_RemovePlayerFromTeam(scanner);   break;
-                case "19": GetTeamDetails.Client_GetTeamDetails(scanner);               break;
-                case "20": UpdateTeamRank.Client_UpdateTeamRank(scanner);               break;
+                case "15": CreateTeam.Client_CreateTeam(scanner);                       break;
+                case "16": AddPlayerToTeam.Client_AddPlayerToTeam(scanner);             break;
+                case "17": RemovePlayerFromTeam.Client_RemovePlayerFromTeam(scanner);   break;
+                case "18": GetTeamDetails.Client_GetTeamDetails(scanner);               break;
+                case "19": UpdateTeamRank.Client_UpdateTeamRank(scanner);               break;
+                case "20": GetAllTeams.Client_GetAllTeams(scanner);                     break;
                 // --- Gisele's APIs ---
                 // TODO: add cases and call Gisele's Client functions here
 
@@ -95,12 +95,12 @@ public class Main {
         System.out.println("12. Add Player To Party");
         System.out.println("13. Remove Player From Party");
         System.out.println("14. Get Party Suggestions");
-        System.out.println("15. Search Teams");
-        System.out.println("16. Create Team");
-        System.out.println("17. Add Player To Team");
-        System.out.println("18. Remove Player From Team");
-        System.out.println("19. Get Team Details");
-        System.out.println("20. Update Team Rank");
+        System.out.println("15. Create Team");
+        System.out.println("16. Add Player To Team");
+        System.out.println("17. Remove Player From Team");
+        System.out.println("18. Get Team Details");
+        System.out.println("19. Update Team Rank");
+        System.out.println("20. Get All Teams");
 
         // TODO: Gisele -- add your API names here
 

@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static final String URL = "jdbc:postgresql://db.pmpbhslcpywhqpmcflmw.supabase.co:5432/postgres?sslmode=require";
-    private static final String USER = "postgres";
+    private static final String URL      = "jdbc:postgresql://aws-1-us-east-1.pooler.supabase.com:5432/postgres?sslmode=require";
+    private static final String USER     = "postgres.pmpbhslcpywhqpmcflmw";
     private static final String PASSWORD = "TheSchemaSquad123";
+
 
     // hold the one single connection in memory
     private static Connection singleConn = null;
