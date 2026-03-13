@@ -9,6 +9,7 @@ public class DBConnection {
     private static final String USER     = "postgres.pmpbhslcpywhqpmcflmw";
     private static final String PASSWORD = "TheSchemaSquad123";
 
+
     // hold the one single connection in memory
     private static Connection singleConn = null;
     //  neutralize the constructor to prevent creating multiple instances of DBConnection
