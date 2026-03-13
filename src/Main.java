@@ -59,6 +59,8 @@ public class Main {
                 case "23": GetTopPlayersByItem.Client_GetTopPlayersByItem(scanner);     break;
                 case "24": AddItemToInventory.Client_AddItemToInventory(scanner);       break;
                 case "25": RemoveItemFromInventory.Client_RemoveItemFromInventory(scanner); break;
+                case "26": ExecuteTrade.Client_ExecuteTrade(scanner);                   break;
+                case "27": GetTradeHistory.Client_GetTradeHistory(scanner);             break;
 
                 // --- Shreyas's APIs ---
                 // TODO: add cases and call Shreyas's Client functions here
@@ -113,6 +115,8 @@ public class Main {
         System.out.println("23. Get Top Players By Item");
         System.out.println("24. Add Item To Inventory");
         System.out.println("25. Remove Item From Inventory");
+        System.out.println("26. Execute Trade");
+        System.out.println("27. Get Trade History");
 
         // TODO: Shreyas -- add your API names here
 
