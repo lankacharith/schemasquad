@@ -9,8 +9,10 @@ import vincentapis.*;
 
 public class Main {
 
-    // shared scanner so we dont make a new one every time
     public static Scanner scanner = new Scanner(System.in);
+    private static final int W = 42;
+    private static final int CONTENT_W = W - 4;  // for "| " and " |"
+    private static final String LINE  = "+" + "-".repeat(W - 2) + "+";
 
     public static void main(String[] args) {
 
@@ -18,7 +20,6 @@ public class Main {
         System.out.println("  Welcome to Schema Squad MMO ");
         System.out.println("==============================");
 
-        // keep showing the menu until the user quits
         boolean running = true;
         while (running) {
             printMenu();
@@ -26,54 +27,48 @@ public class Main {
 
             switch (choice) {
 
-                // --- Charith's APIs ---
+                // Players & leaderboards
                 case "1": GetPlayerLeaderboard.Client_GetPlayerLeaderboard(scanner);   break;
                 case "2": GetTopPlayersByLevel.Client_GetTopPlayersByLevel(scanner);   break;
-                case "3": SearchPlayers.Client_SearchPlayers(scanner);                 break;
-                case "4": CreateEvent.Client_CreateEvent(scanner);                     break;
-                case "5": GetActiveEvents.Client_GetActiveEvents(scanner);             break;
+                case "3": SearchPlayers.Client_SearchPlayers(scanner);                  break;
+
+                // Events
+                case "4": CreateEvent.Client_CreateEvent(scanner);                      break;
+                case "5": GetActiveEvents.Client_GetActiveEvents(scanner);              break;
                 case "6": GetPlayerEventCooldown.Client_GetPlayerEventCooldown(scanner); break;
-                case "7": UseAbility.Client_UseAbility(scanner);                       break;
-                case "8": GetAbilityCooldowns.Client_GetAbilityCooldowns(scanner);     break;
 
-                // --- Enes's APIs ---
-                // TODO: add cases 9-18 and call Enes's Client functions here
+                // Abilities
+                case "7": UseAbility.Client_UseAbility(scanner);                         break;
+                case "8": GetAbilityCooldowns.Client_GetAbilityCooldowns(scanner);      break;
 
-                // --- Vincent's APIs ---
+                // Parties
                 case "9": GetPartyMembers.Client_GetPartyMembers(scanner);              break;
-                case "10": CreateParty.Client_CreateParty(scanner);                     break;
-                case "11": GetAllParties.Client_GetAllParties(scanner);                 break;
+                case "10": CreateParty.Client_CreateParty(scanner);                      break;
+                case "11": GetAllParties.Client_GetAllParties(scanner);                  break;
                 case "12": AddPlayerToParty.Client_AddPlayerToParty(scanner);           break;
                 case "13": RemovePlayerFromParty.Client_RemovePlayerFromParty(scanner); break;
                 case "14": GetPartySuggestions.Client_GetPartySuggestions(scanner);     break;
-                case "15": SearchTeams.Client_SearchTeams(scanner);                     break;
-                case "16": CreateTeam.Client_CreateTeam(scanner);                       break;
-                case "17": AddPlayerToTeam.Client_AddPlayerToTeam(scanner);             break;
-                case "18": RemovePlayerFromTeam.Client_RemovePlayerFromTeam(scanner);   break;
-                case "19": GetTeamDetails.Client_GetTeamDetails(scanner);               break;
-                case "20": UpdateTeamRank.Client_UpdateTeamRank(scanner);               break;
 
+                // Teams
                 case "15": CreateTeam.Client_CreateTeam(scanner);                       break;
-                case "16": AddPlayerToTeam.Client_AddPlayerToTeam(scanner);             break;
-                case "17": RemovePlayerFromTeam.Client_RemovePlayerFromTeam(scanner);   break;
+                case "16": AddPlayerToTeam.Client_AddPlayerToTeam(scanner);           break;
+                case "17": RemovePlayerFromTeam.Client_RemovePlayerFromTeam(scanner);  break;
                 case "18": GetTeamDetails.Client_GetTeamDetails(scanner);               break;
                 case "19": UpdateTeamRank.Client_UpdateTeamRank(scanner);               break;
                 case "20": GetAllTeams.Client_GetAllTeams(scanner);                     break;
-                // --- Gisele's APIs ---
+
+                // Inventory & trading
                 case "21": GetPlayerInventory.Client_GetPlayerInventory(scanner);       break;
-                case "22": GetRichestPlayers.Client_GetRichestPlayers(scanner);         break;
-                case "23": GetTopPlayersByItem.Client_GetTopPlayersByItem(scanner);     break;
-                case "24": AddItemToInventory.Client_AddItemToInventory(scanner);       break;
+                case "22": GetRichestPlayers.Client_GetRichestPlayers(scanner);        break;
+                case "23": GetTopPlayersByItem.Client_GetTopPlayersByItem(scanner);    break;
+                case "24": AddItemToInventory.Client_AddItemToInventory(scanner);        break;
                 case "25": RemoveItemFromInventory.Client_RemoveItemFromInventory(scanner); break;
                 case "26": ExecuteTrade.Client_ExecuteTrade(scanner);                   break;
                 case "27": GetTradeHistory.Client_GetTradeHistory(scanner);             break;
 
-                // --- Shreyas's APIs ---
-                // TODO: add cases and call Shreyas's Client functions here
-
                 case "0":
                     System.out.println("Goodbye!");
-                    dbconnection.DBConnection.shutdown(); // close the connection pool when quitting
+                    dbconnection.DBConnection.shutdown();
                     running = false;
                     break;
 
@@ -85,53 +80,83 @@ public class Main {
         scanner.close();
     }
 
-    // add your API name here so it shows up in the menu
     private static void printMenu() {
-        System.out.println("\n--- API Menu ---");
+        System.out.println();
+        System.out.println(LINE);
+        System.out.println("| " + pad("SCHEMA SQUAD MENU", CONTENT_W) + " |");
+        System.out.println(LINE);
 
-        // Charith
-        System.out.println("1.  Get Player Leaderboard");
-        System.out.println("2.  Get Top Players By Level");
-        System.out.println("3.  Search Players");
-        System.out.println("4.  Create Event");
-        System.out.println("5.  Get Active Events");
-        System.out.println("6.  Get Player Event Cooldown");
-        System.out.println("7.  Use Ability");
-        System.out.println("8.  Get Ability Cooldowns");
+        section("LEADERBOARDS & RANKINGS",
+            "  1. Get Player Leaderboard",
+            "  2. Get Top Players By Level");
+        gap();
+        section("PLAYER SEARCH",
+            "  3. Search Players");
+        gap();
+        section("EVENTS",
+            "  4. Create Event",
+            "  5. Get Active Events",
+            "  6. Get Player Event Cooldown");
+        gap();
+        section("ABILITIES",
+            "  7. Use Ability",
+            "  8. Get Ability Cooldowns");
+        gap();
+        section("PARTIES",
+            "  9. Get Party Members",
+            " 10. Create Party",
+            " 11. Get All Parties",
+            " 12. Add Player To Party",
+            " 13. Remove Player From Party",
+            " 14. Get Party Suggestions");
+        gap();
+        section("TEAMS",
+            " 15. Create Team",
+            " 16. Add Player To Team",
+            " 17. Remove Player From Team",
+            " 18. Get Team Details",
+            " 19. Update Team Rank",
+            " 20. Get All Teams");
+        gap();
+        section("INVENTORY & TRADING",
+            " 21. Get Player Inventory",
+            " 22. Get Richest Players",
+            " 23. Get Top Players By Item",
+            " 24. Add Item To Inventory",
+            " 25. Remove Item From Inventory",
+            " 26. Execute Trade",
+            " 27. Get Trade History");
+        gap();
+        section("", "  0. Quit");
 
-        // TODO: Enes -- add your API names here
-
-        // TODO: Vincent -- add your API names here
-        System.out.println("9.  Get Party Members");
-        System.out.println("10. Create Party");
-        System.out.println("11. Get All Parties");
-        System.out.println("12. Add Player To Party");
-        System.out.println("13. Remove Player From Party");
-        System.out.println("14. Get Party Suggestions");
-        System.out.println("15. Create Team");
-        System.out.println("16. Add Player To Team");
-        System.out.println("17. Remove Player From Team");
-        System.out.println("18. Get Team Details");
-        System.out.println("19. Update Team Rank");
-        System.out.println("20. Get All Teams");
-
-        // TODO: Gisele -- add your API names here
-        System.out.println("21. Get Player Inventory");
-        System.out.println("22. Get Richest Players");
-        System.out.println("23. Get Top Players By Item");
-        System.out.println("24. Add Item To Inventory");
-        System.out.println("25. Remove Item From Inventory");
-        System.out.println("26. Execute Trade");
-        System.out.println("27. Get Trade History");
-
-        // TODO: Shreyas -- add your API names here
-
-        System.out.println("0.  Quit");
         System.out.print("Enter choice: ");
     }
 
-    // placeholder until an API is implemented
-    private static void printNotImplemented(String choice) {
-        System.out.println("Option " + choice + " is not implemented yet.");
+    private static void gap() {
+        System.out.println();
     }
+
+    private static void section(String header, String... lines) {
+        if (header.isEmpty()) {
+            System.out.println(LINE);
+            for (String line : lines) {
+                System.out.println("| " + pad(line, CONTENT_W) + " |");
+            }
+        } else {
+            String headerLine = " " + header + " ";
+            int dashLen = W - 3 - headerLine.length();  // 2 + headerLine + dashLen + 1 = W
+            if (dashLen < 0) dashLen = 0;
+            System.out.println("+-" + headerLine + "-".repeat(dashLen) + "+");
+            for (String line : lines) {
+                System.out.println("| " + pad(line, CONTENT_W) + " |");
+            }
+        }
+        System.out.println(LINE);
+    }
+
+    private static String pad(String s, int width) {
+        if (s.length() >= width) return s.substring(0, width);
+        return s + " ".repeat(width - s.length());
+    }
+
 }

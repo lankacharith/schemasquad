@@ -11,17 +11,17 @@ public class UpdateTeamRank {
     public static void Client_UpdateTeamRank(Scanner scanner) {
         System.out.println("\n--- Update Team Rank ---");
         
-        System.out.print("enter character name: ");
+        System.out.print("Enter character name: ");
         String charName = scanner.nextLine().trim();
         if (charName.isEmpty()) {
-            System.out.println("client error: character name cannot be empty.");
+            System.out.println("Character name cannot be empty.");
             return;
         }
 
-        System.out.print("enter new rank (e.g., Recruit, Member, Veteran, Co-Owner): ");
+        System.out.print("Enter new rank (e.g., Recruit, Member, Veteran, Co-Owner): ");
         String newRank = scanner.nextLine().trim();
         if (newRank.isEmpty()) {
-            System.out.println("client error: rank cannot be empty.");
+            System.out.println("Rank cannot be empty.");
             return;
         }
 
@@ -43,27 +43,23 @@ public class UpdateTeamRank {
             // start transaction: protects data integrity while we run our check-then-update logic
             conn.setAutoCommit(false);
 
-            // validate rank and get its surrogate key
-            String rankSql = 
-                "SELECT \n" +
-                "    ID \n" +
-                "FROM \n" +
-                "    Rank \n" +
-                "WHERE \n" +
-                "    RankName = ?";
-                
+            // Validate rank (case-insensitive) and get its surrogate key and display name.
+            String rankSql =
+                "SELECT ID, RankName FROM Rank WHERE UPPER(RankName) = UPPER(?)";
             checkRankStmt = conn.prepareStatement(rankSql);
             checkRankStmt.setString(1, newRank);
             rs = checkRankStmt.executeQuery();
 
             int rankId;
+            String displayRankName;
             if (rs.next()) {
                 rankId = rs.getInt("ID");
+                displayRankName = rs.getString("RankName");
             } else {
                 conn.rollback();
-                return "error: the rank '" + newRank + "' does not exist in the system.";
+                return "Error: the rank '" + newRank + "' does not exist in the system.";
             }
-            rs.close(); // close before reuse
+            rs.close();
 
             // validate character and ensure they are currently in a team
             String charSql = 
@@ -80,13 +76,13 @@ public class UpdateTeamRank {
 
             if (!rs.next()) {
                 conn.rollback();
-                return "error: character '" + charName + "' does not exist.";
+                return "Error: character '" + charName + "' does not exist.";
             }
 
             rs.getInt("TeamID");
             if (rs.wasNull()) {
                 conn.rollback();
-                return "error: character '" + charName + "' is not currently in a team and cannot have a rank assigned.";
+                return "Error: character '" + charName + "' is not currently in a team and cannot have a rank assigned.";
             }
             rs.close();
 
@@ -107,17 +103,16 @@ public class UpdateTeamRank {
             
             if (rowsAffected == 0) {
                 conn.rollback();
-                return "error: failed to update rank. please try again.";
+                return "Error: failed to update rank. Please try again.";
             }
 
-            // commit the transaction
             conn.commit();
-            return "success! " + charName + " has been updated to the rank of " + newRank + ".";
+            return "Success! " + charName + " has been updated to the rank of " + displayRankName + ".";
 
         } catch (SQLException e) {
             // rollback everything if any step fails
             try { if (conn != null) conn.rollback(); } catch (SQLException ex) { /* ignored */ }
-            return "database error: " + e.getMessage();
+            return "Database error: " + e.getMessage();
         } finally {
             // restore auto-commit behavior for the connection pool
             try { if (conn != null) conn.setAutoCommit(true); } catch (SQLException e) { /* ignored */ }

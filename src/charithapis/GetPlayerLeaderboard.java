@@ -8,33 +8,46 @@ import dbconnection.DBConnection;
 
 public class GetPlayerLeaderboard {
 
-    // LargeList requires 50 rows per page
-    private static final int PAGE_SIZE = 50;
+    private static final int MAX_ROWS = 100;
+    private static final int MIN_ROWS = 1;
 
-    // asks user for rank type then loops through pages
+    // Asks user for rank type, how many rows to show, then loops through pages.
     public static void Client_GetPlayerLeaderboard(Scanner scanner) {
         System.out.println("\n--- Get Player Leaderboard ---");
-        System.out.println("Rank types: gold, hp, mp");
+        System.out.println("Rank types: gold, hp, mp.");
         System.out.print("Enter rank type: ");
         String rankType = scanner.nextLine().trim().toLowerCase();
 
-        // start at page 1 and keep going until user says no
+        int rowsPerPage = 0;
+        while (rowsPerPage < MIN_ROWS || rowsPerPage > MAX_ROWS) {
+            System.out.print("How many rows to display? (" + MIN_ROWS + "-" + MAX_ROWS + "): ");
+            String input = scanner.nextLine().trim();
+            try {
+                rowsPerPage = Integer.parseInt(input);
+                if (rowsPerPage < MIN_ROWS || rowsPerPage > MAX_ROWS) {
+                    System.out.println("Please enter a number between " + MIN_ROWS + " and " + MAX_ROWS + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
+
         int page = 1;
         while (true) {
-            System.out.println(Server_GetPlayerLeaderboard(rankType, page));
+            System.out.println(Server_GetPlayerLeaderboard(rankType, page, rowsPerPage));
             System.out.print("Next page? (yes/no): ");
             if (!scanner.nextLine().trim().equalsIgnoreCase("yes")) break;
             page++;
         }
     }
 
-    // runs the SQL and returns results as a formatted string
-    public static String Server_GetPlayerLeaderboard(String rankType, int pageNum) {
+    // Runs the SQL and returns results as a formatted string.
+    public static String Server_GetPlayerLeaderboard(String rankType, int pageNum, int rowsPerPage) {
         Connection conn = null;
         try {
             conn = DBConnection.getConnection();
 
-            // pick which column to sort by -- never put user input directly in SQL
+            // Pick which column to sort by -- never put user input directly in SQL.
             String sortCol;
             switch (rankType) {
                 case "gold": sortCol = "c.Currency";  break;
@@ -43,10 +56,8 @@ public class GetPlayerLeaderboard {
                 default: return "Error: pick gold, hp, or mp.";
             }
 
-            // offset skips past rows we already showed
-            int offset = (pageNum - 1) * PAGE_SIZE;
+            int offset = (pageNum - 1) * rowsPerPage;
 
-            // join Character and Player to get username alongside character info
             String sql =
                 "SELECT c.Name, p.Username, c.Currency, c.CurrentHP, c.CurrentMP " +
                 "FROM Character c " +
@@ -56,7 +67,7 @@ public class GetPlayerLeaderboard {
                 "LIMIT ? OFFSET ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, PAGE_SIZE);
+            stmt.setInt(1, rowsPerPage);
             stmt.setInt(2, offset);
             ResultSet rs = stmt.executeQuery();
 
