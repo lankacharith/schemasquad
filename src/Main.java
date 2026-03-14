@@ -4,6 +4,7 @@
 
 import charithapis.*;
 import giseleapis.*;
+import shreyasapis.*;
 import java.util.Scanner;
 import vincentapis.*;
 
@@ -66,6 +67,13 @@ public class Main {
                 case "26": ExecuteTrade.Client_ExecuteTrade(scanner);                   break;
                 case "27": GetTradeHistory.Client_GetTradeHistory(scanner);             break;
 
+                // Quest Assignment & Tracking
+                case "28": ListQuests.Client_ListQuests(scanner);                         break;
+                case "29": AssignQuestToCharacter.Client_AssignQuestToCharacter(scanner); break;
+                case "30": UpdateQuestProgress.Client_UpdateQuestProgress(scanner);       break;
+                case "31": GetActiveQuests.Client_GetActiveQuests(scanner);               break;
+                case "32": GetCompletedQuests.Client_GetCompletedQuests(scanner);         break;
+
                 case "0":
                     System.out.println("Goodbye!");
                     dbconnection.DBConnection.shutdown();
@@ -126,6 +134,13 @@ public class Main {
             " 25. Remove Item From Inventory",
             " 26. Execute Trade",
             " 27. Get Trade History");
+        gap();
+        section ("QUEST ASSIGNMENT & TRACKING",
+            " 28. List Quests",
+            " 29. Assign Quest To Character",
+            " 30. Update Quest Progress",
+            " 31. Get Active Quests",
+            " 32. Get Completed Quests");
         gap();
         section("", "  0. Quit");
 
