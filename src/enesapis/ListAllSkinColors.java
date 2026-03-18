@@ -1,54 +1,51 @@
 package enesapis;
-
 import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Case 14: ListAllRaces API (40 pts)
- * Lists all available character races/species
+ * Helper API: ListAllSkinColors
+ * Lists all available skin color options for character customization
  */
-public class ListAllRaces {
+public class ListAllSkinColors {
     
     /**
-     * Main execution method for the ListAllRaces API
-     * Can be called from case 14 in switch statement
+     * Main execution method (can be called standalone if needed)
      */
     public static void execute(Scanner scanner, Connection conn) {
-        System.out.println("\n=== List All Races ===");
-        String result = listAllRaces(conn);
+        System.out.println("\n=== List All Skin Colors ===");
+        String result = listAllSkinColors(conn);
         System.out.println("\n" + result);
     }
     
     /**
-     * Lists all available character races/species
+     * Lists all available skin color options
      * @param conn Database connection
-     * @return Formatted table of all races
+     * @return Formatted list of all skin colors
      */
-    public static String listAllRaces(Connection conn) {
+    public static String listAllSkinColors(Connection conn) {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
         try {
-            String query = "SELECT racename FROM race ORDER BY racename";
+            String query = "SELECT skincolor FROM skincolor ORDER BY skincolor";
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
             
             StringBuilder result = new StringBuilder();
-            result.append("=== All Character Races ===\n");
-            result.append(String.format("%-20s\n", "Race Name"));
-            result.append("-".repeat(20)).append("\n");
+            result.append("=== Available Skin Colors ===\n");
+            result.append("-".repeat(30)).append("\n");
             
             int count = 0;
             while (rs.next()) {
-                String raceName = rs.getString("racename");
-                result.append(String.format("%-20s\n", raceName));
+                String skinColor = rs.getString("skincolor");
+                result.append(String.format("  - %s\n", skinColor));
                 count++;
             }
             
             if (count == 0) {
-                result.append("No races found.\n");
+                result.append("No skin colors found.\n");
             } else {
-                result.append("\nTotal: ").append(count).append(" races\n");
+                result.append("\nTotal: ").append(count).append(" skin colors\n");
             }
             
             return result.toString();

@@ -31,7 +31,7 @@ public class BanPlayer {
         PreparedStatement stmt = null;
         
         try {
-            String query = "UPDATE Player SET IsBanned = true WHERE Username = ?";
+            String query = "UPDATE player SET banstatus = true WHERE username = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, username);
             

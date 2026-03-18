@@ -4,7 +4,7 @@ import java.util.Scanner;
  
 /**
  * Case 18: UpdateCharacterAppearance API (40 pts)
- * Updates a character's appearance (hair and skin)
+ * Updates a character's appearance (hair and skin) using foreign key IDs
  */
 public class UpdateCharacterAppearance {
     
@@ -14,10 +14,13 @@ public class UpdateCharacterAppearance {
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Update Character Appearance ===");
-        System.out.println("First, let's see what hair options are available...\n");
+        System.out.println("First, let's see what options are available...\n");
         
         // Automatically display available hair options
-        System.out.println(GetHairOptions.GetHairOptions(conn));
+        System.out.println(GetHairOptions.getHairOptions(conn));
+        
+        // Automatically display available skin colors
+        System.out.println(ListAllSkinColors.listAllSkinColors(conn));
         
         System.out.println("\n" + "=".repeat(70));
         System.out.println("Now, let's update your character's appearance:");
@@ -30,7 +33,7 @@ public class UpdateCharacterAppearance {
         String hairType = scanner.nextLine().trim();
         if (hairType.isEmpty()) hairType = null;
         
-        System.out.print("Enter new hair color (must match hair type, or press Enter to skip): ");
+        System.out.print("Enter new hair color (or press Enter to skip): ");
         String hairColor = scanner.nextLine().trim();
         if (hairColor.isEmpty()) hairColor = null;
         
@@ -57,48 +60,67 @@ public class UpdateCharacterAppearance {
         PreparedStatement stmt = null;
         
         try {
-            // Validate hair options if provided
-            if (hairType != null && hairColor != null) {
-                if (!validateHairOption(conn, hairType, hairColor)) {
-                    return "Error: Invalid hair type or color combination";
-                }
+            // Check if at least one field is being updated
+            if (hairType == null && hairColor == null && skinColor == null) {
+                return "Error: No changes specified. Please provide at least one field to update.";
             }
             
             // Build dynamic update query based on which fields are provided
-            StringBuilder queryBuilder = new StringBuilder("UPDATE Character SET ");
+            StringBuilder queryBuilder = new StringBuilder("UPDATE character SET ");
             boolean needsComma = false;
             
+            // Get IDs for the provided values
+            Integer hairTypeID = null;
             if (hairType != null) {
-                queryBuilder.append("HairType = ?");
+                hairTypeID = getIDByName(conn, "hairtype", "hairtype", hairType);
+                if (hairTypeID == null) {
+                    return "Error: Invalid hair type '" + hairType + "'";
+                }
+                queryBuilder.append("hairtypeid = ?");
                 needsComma = true;
             }
             
+            Integer hairColorID = null;
             if (hairColor != null) {
+                hairColorID = getIDByName(conn, "haircolor", "color", hairColor);
+                if (hairColorID == null) {
+                    return "Error: Invalid hair color '" + hairColor + "'";
+                }
                 if (needsComma) queryBuilder.append(", ");
-                queryBuilder.append("HairColor = ?");
+                queryBuilder.append("haircolorid = ?");
                 needsComma = true;
             }
             
+            Integer skinColorID = null;
             if (skinColor != null) {
+                skinColorID = getIDByName(conn, "skincolor", "skincolor", skinColor);
+                if (skinColorID == null) {
+                    return "Error: Invalid skin color '" + skinColor + "'";
+                }
                 if (needsComma) queryBuilder.append(", ");
-                queryBuilder.append("SkinColor = ?");
+                queryBuilder.append("skincolorid = ?");
             }
             
-            queryBuilder.append(" WHERE CharName = ?");
+            queryBuilder.append(" WHERE name = ?");
             
             stmt = conn.prepareStatement(queryBuilder.toString());
             
             // Set parameters based on what was provided
             int paramIndex = 1;
-            if (hairType != null) stmt.setString(paramIndex++, hairType);
-            if (hairColor != null) stmt.setString(paramIndex++, hairColor);
-            if (skinColor != null) stmt.setString(paramIndex++, skinColor);
+            if (hairTypeID != null) stmt.setInt(paramIndex++, hairTypeID);
+            if (hairColorID != null) stmt.setInt(paramIndex++, hairColorID);
+            if (skinColorID != null) stmt.setInt(paramIndex++, skinColorID);
             stmt.setString(paramIndex, charName);
             
             int rowsAffected = stmt.executeUpdate();
             
             if (rowsAffected > 0) {
-                return "Success: Character appearance updated for '" + charName + "'";
+                StringBuilder changes = new StringBuilder();
+                if (hairType != null) changes.append("hair type to '" + hairType + "' ");
+                if (hairColor != null) changes.append("hair color to '" + hairColor + "' ");
+                if (skinColor != null) changes.append("skin color to '" + skinColor + "' ");
+                
+                return "Success: Character appearance updated for '" + charName + "' - changed " + changes.toString();
             } else {
                 return "Error: Character '" + charName + "' not found";
             }
@@ -115,16 +137,18 @@ public class UpdateCharacterAppearance {
     }
     
     /**
-     * Helper method to validate hair options exist in HairOptions table
+     * Helper method to get ID from a lookup table by name
      */
-    private static boolean validateHairOption(Connection conn, String hairType, 
-                                             String hairColor) throws SQLException {
-        String query = "SELECT COUNT(*) FROM HairOptions WHERE HairType = ? AND HairColor = ?";
+    private static Integer getIDByName(Connection conn, String table, String nameColumn, 
+                                      String value) throws SQLException {
+        String query = "SELECT id FROM " + table + " WHERE " + nameColumn + " = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, hairType);
-            stmt.setString(2, hairColor);
+            stmt.setString(1, value);
             try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+                return null;
             }
         }
     }
