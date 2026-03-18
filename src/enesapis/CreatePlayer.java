@@ -6,7 +6,16 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Case 9: CreatePlayer API (40 pts)
+ * Creates a new player account with authentication
+ */
 public class CreatePlayer {
+    
+    /**
+     * Main execution method for the CreatePlayer API
+     * Can be called from case 9 in switch statement
+     */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Create Player Account ===");
         System.out.print("Enter username: ");
@@ -20,16 +29,24 @@ public class CreatePlayer {
         
         String result = createPlayer(conn, username, password, email);
         System.out.println("\n" + result);
-    }   
-
+    }
+    
+    /**
+     * Creates a new player account
+     * @param conn Database connection
+     * @param username Unique player username
+     * @param password Player password (will be hashed)
+     * @param email Player email address
+     * @return Success message or error string
+     */
     public static String createPlayer(Connection conn, String username, String password, String email) {
         PreparedStatement checkStmt = null;
         PreparedStatement insertStmt = null;
         ResultSet rs = null;
-
+        
         try {
             // Check if username already exists
-            String checkQuery = "SELECT COUNT(*) FROM Player WHERE Username = ?";
+            String checkQuery = "SELECT COUNT(*) FROM player WHERE username = ?";
             checkStmt = conn.prepareStatement(checkQuery);
             checkStmt.setString(1, username);
             rs = checkStmt.executeQuery();
@@ -42,7 +59,7 @@ public class CreatePlayer {
             String passwordHash = hashPassword(password);
             
             // Insert new player
-            String insertQuery = "INSERT INTO Player (Username, PasswordHash, Email, IsBanned) VALUES (?, ?, ?, false)";
+            String insertQuery = "INSERT INTO player (username, passwordhash, email, banstatus) VALUES (?, ?, ?, false)";
             insertStmt = conn.prepareStatement(insertQuery);
             insertStmt.setString(1, username);
             insertStmt.setString(2, passwordHash);
@@ -66,8 +83,12 @@ public class CreatePlayer {
             } catch (SQLException e) {
                 System.err.println("Error closing resources: " + e.getMessage());
             }
-        }        
+        }
     }
+    
+    /**
+     * Helper method to hash passwords using SHA-256
+     */
     private static String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
