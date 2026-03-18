@@ -176,8 +176,7 @@ public class CreateCharacter {
             if (rowsAffected > 0) {
                 conn.commit();
                 return "Success: Character '" + charName + "' created for player '" + username + 
-                       "' as a " + race + " " + charClass + 
-                       " with inventory container ID " + invContainerID;
+                       "' as a " + race + " " + charClass;
             } else {
                 conn.rollback();
                 return "Error: Failed to create character";
