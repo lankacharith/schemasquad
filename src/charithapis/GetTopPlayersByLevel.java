@@ -74,7 +74,7 @@ public class GetTopPlayersByLevel {
         } catch (SQLException e) {
             return "Error: " + e.getMessage();
         } finally {
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }

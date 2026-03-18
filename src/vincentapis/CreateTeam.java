@@ -188,7 +188,7 @@ public class CreateTeam {
             try { if (getRankStmt != null) getRankStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (insertTeamStmt != null) insertTeamStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (updateCharStmt != null) updateCharStmt.close(); } catch (SQLException e) { /* ignored */ }
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }

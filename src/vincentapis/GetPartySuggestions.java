@@ -151,7 +151,7 @@ public class GetPartySuggestions {
             // safely close resources without severing the physical database connection
             try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignored */ }
             try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignored */ }
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }

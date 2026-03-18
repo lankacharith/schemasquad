@@ -1,6 +1,7 @@
 package shreyasapis;
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class GetCharacterStats {
@@ -20,11 +21,12 @@ public class GetCharacterStats {
 
             String sql =
             "SELECT C.name AS character_name, T.name AS team_name, R.RankName AS rank_name, CA.ClassName AS class_name, " +
-            "C.Currency, C.CurrentHP, C.CurrentMP, C.CurrentStam " +
+            "C.Currency, C.CurrentHP, C.MaxHP, C.CurrentMP, C.MaxMP, C.CurrentStam, C.MaxStam, L.name AS location_name, C.isOnline, C.LastOnline " +
             "FROM Character C " +
             "JOIN Team T ON C.TeamID = T.ID " +
             "JOIN Rank R ON C.RankID = R.ID " +
             "JOIN Class CA ON C.ClassID = CA.ID " +
+            "JOIN Location L ON C.LocationID = L.ID " +
             "WHERE C.name ILIKE ?";
 
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -32,9 +34,9 @@ public class GetCharacterStats {
             ResultSet rs = stmt.executeQuery();
 
             sb.append(String.format("\n=== Stats for %s ===\n", charName));
-            sb.append(String.format("%-12s %-30s %-15s %-15s %-12s %-12s %-12s %-12s\n",
-                "Name", "Team", "Rank", "Class", "Currency", "CurrentHP", "CurrentMP", "CurrentStam"));
-            sb.append("-".repeat(130) + "\n");
+            sb.append(String.format("%-12s %-25s %-12s %-12s %-12s %-12s %-12s %-12s %-12s %-15s %-15s\n",
+                "Name", "Team", "Rank", "Class", "Currency", "Health", "Mana", "Stamina", "Location", "Online Status", "Last Online"));
+            sb.append("-".repeat(170) + "\n");
 
             boolean found = false;
 
@@ -45,12 +47,28 @@ public class GetCharacterStats {
                 String rankName = rs.getString("rank_name");
                 String className = rs.getString("class_name");
                 int currency = rs.getInt("Currency");
-                int currentHP = rs.getInt("CurrentHP");
-                int currentMP = rs.getInt("CurrentMP");
-                int currentStam = rs.getInt("CurrentStam");
 
-                sb.append(String.format("%-12s %-30s %-15s %-15s %-12d %-12d %-12d %-12d\n",
-                    name, teamName, rankName, className, currency, currentHP, currentMP, currentStam));
+                int currentHP = rs.getInt("CurrentHP");
+                int maxHP = rs.getInt("MaxHP");
+                int currentMP = rs.getInt("CurrentMP");
+                int maxMP = rs.getInt("MaxMP");
+                int currentStam = rs.getInt("CurrentStam");
+                int maxStam = rs.getInt("MaxStam");
+                String locationName = rs.getString("location_name");
+                boolean isOnline = rs.getBoolean("isOnline");
+                                Timestamp lastOnline = rs.getTimestamp("LastOnline");
+                String lastOnlineStr = "N/A";
+                if (lastOnline != null) {
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    lastOnlineStr = lastOnline.toLocalDateTime().format(fmt);
+                }
+
+                sb.append(String.format("%-12s %-25s %-12s %-12s %-12d %-12s %-12s %-12s %-12s %-15s %-15s\n",
+                    name, teamName, rankName, className, currency,
+                    currentHP + "/" + maxHP,
+                    currentMP + "/" + maxMP,
+                    currentStam + "/" + maxStam,
+                    locationName, isOnline ? "Online" : "Offline", lastOnlineStr));
             }
 
             if (!found) {
