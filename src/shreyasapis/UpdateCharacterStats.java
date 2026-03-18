@@ -276,7 +276,7 @@ public class UpdateCharacterStats {
             return "Error: Database error occurred while updating character stats.";
         } finally {
             if (conn != null) {
-                DBConnection.closeConnection(conn);
+                DBConnection.closeConnection(conn); //dummy method to not break
             }
         }
     }

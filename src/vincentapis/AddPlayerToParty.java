@@ -151,7 +151,7 @@ public class AddPlayerToParty {
             try { if (checkCharStmt != null) checkCharStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (checkPartyStmt != null) checkPartyStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (updateStmt != null) updateStmt.close(); } catch (SQLException e) { /* ignored */ }
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }

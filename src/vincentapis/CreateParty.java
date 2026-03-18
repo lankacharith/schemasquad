@@ -149,7 +149,7 @@ public class CreateParty {
             try { if (checkCodeStmt != null) checkCodeStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (insertPartyStmt != null) insertPartyStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (updateCharStmt != null) updateCharStmt.close(); } catch (SQLException e) { /* ignored */ }
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 

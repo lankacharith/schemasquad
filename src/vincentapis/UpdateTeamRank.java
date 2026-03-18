@@ -122,7 +122,7 @@ public class UpdateTeamRank {
             try { if (checkRankStmt != null) checkRankStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (checkCharStmt != null) checkCharStmt.close(); } catch (SQLException e) { /* ignored */ }
             try { if (updateStmt != null) updateStmt.close(); } catch (SQLException e) { /* ignored */ }
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }

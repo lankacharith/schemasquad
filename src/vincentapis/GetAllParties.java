@@ -99,7 +99,7 @@ public class GetAllParties {
             // closing the resultset completely destroys the db cursor so it is not held open
             try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignored */ }
             try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignored */ }
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }

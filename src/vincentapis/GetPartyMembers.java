@@ -99,7 +99,7 @@ public class GetPartyMembers {
             try { if (rs != null) rs.close(); } catch (SQLException e) { /* ignored */ }
             try { if (stmt != null) stmt.close(); } catch (SQLException e) { /* ignored */ }
             // Do not close physical connection if utilizing a connection pool, just return to pool.
-            DBConnection.closeConnection(conn);
+            DBConnection.closeConnection(conn); //dummy method to not break
         }
     }
 }
