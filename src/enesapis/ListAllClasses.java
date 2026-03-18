@@ -27,21 +27,20 @@ public class ListAllClasses {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        try {
-            String query = "SELECT ClassName, Description FROM Class ORDER BY ClassName";
+                try {
+            String query = "SELECT classname FROM class ORDER BY classname";
             stmt = conn.prepareStatement(query);
             rs = stmt.executeQuery();
             
             StringBuilder result = new StringBuilder();
             result.append("=== All Character Classes ===\n");
-            result.append(String.format("%-15s | %-50s\n", "Class Name", "Description"));
-            result.append("-".repeat(70)).append("\n");
+            result.append(String.format("%-20s\n", "Class Name"));
+            result.append("-".repeat(20)).append("\n");
             
             int count = 0;
             while (rs.next()) {
-                String className = rs.getString("ClassName");
-                String description = rs.getString("Description");
-                result.append(String.format("%-15s | %-50s\n", className, description));
+                String className = rs.getString("classname");
+                result.append(String.format("%-20s\n", className));
                 count++;
             }
             
