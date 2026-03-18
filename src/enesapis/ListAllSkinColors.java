@@ -3,13 +3,13 @@ import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Helper API: ListAllSkinColors
+ * Helper API (case 42): ListAllSkinColors
  * Lists all available skin color options for character customization
  */
 public class ListAllSkinColors {
     
     /**
-     * Main execution method (can be called standalone if needed)
+     * Main execution method
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== List All Skin Colors ===");

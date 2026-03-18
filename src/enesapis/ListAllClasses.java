@@ -3,14 +3,14 @@ import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Case 13: ListAllClasses API (40 pts)
+ * Case 43: ListAllClasses API (40 pts)
  * Lists all available character classes
  */
 public class ListAllClasses {
     
     /**
      * Main execution method for the ListAllClasses API
-     * Can be called from case 13 in switch statement
+     * Can be called from case 43 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== List All Classes ===");

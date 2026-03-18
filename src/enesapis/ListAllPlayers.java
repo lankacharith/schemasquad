@@ -4,14 +4,14 @@ import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Case 12: ListAllPlayers API (80 pts)
+ * Case 35: ListAllPlayers API (40 pts)
  * Lists all players with pagination support
  */
 public class ListAllPlayers {
     
     /**
      * Main execution method for the ListAllPlayers API
-     * Can be called from case 12 in switch statement
+     * Can be called from case 35 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== List All Players ===");

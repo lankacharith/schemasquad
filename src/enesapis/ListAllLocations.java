@@ -3,14 +3,14 @@ import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Case 17: ListAllLocations API (40 pts)
+ * Case 44: ListAllLocations API (40 pts)
  * Lists all game locations/zones/biomes
  */
 public class ListAllLocations {
     
     /**
      * Main execution method for the ListAllLocations API
-     * Can be called from case 17 in switch statement
+     * Can be called from case 44 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== List All Locations ===");

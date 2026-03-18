@@ -3,14 +3,14 @@ import java.sql.*;
 import java.util.Scanner;
 
 /**
- * Case 15: GetHairOptions API (40 pts)
+ * Case 45: GetHairOptions API (40 pts)
  * Lists all available hair customization options
  */
 public class GetHairOptions {
     
     /**
      * Main execution method for the GetHairOptions API
-     * Can be called from case 15 in switch statement
+     * Can be called from case 45 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Get Hair Options ===");
