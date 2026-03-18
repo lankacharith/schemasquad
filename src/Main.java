@@ -74,6 +74,10 @@ public class Main {
                 case "31": GetActiveQuests.Client_GetActiveQuests(scanner);               break;
                 case "32": GetCompletedQuests.Client_GetCompletedQuests(scanner);         break;
 
+                // Character stats
+                case "33": GetCharacterStats.Client_GetCharacterStats(scanner);         break;
+                case "34": UpdateCharacterStats.Client_UpdateCharacterStats(scanner);   break;
+
                 case "0":
                     System.out.println("Goodbye!");
                     dbconnection.DBConnection.shutdown();
@@ -142,6 +146,10 @@ public class Main {
             " 31. Get Active Quests",
             " 32. Get Completed Quests");
         gap();
+        section (" CHARACTER STATS",
+            " 33. Get Character Stats",
+            " 34. Update Character Stats");
+
         section("", "  0. Quit");
 
         System.out.print("Enter choice: ");
