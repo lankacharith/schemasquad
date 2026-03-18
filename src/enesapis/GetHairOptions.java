@@ -3,14 +3,14 @@ import java.sql.*;
 import java.util.Scanner;
 
 /**
- * Case 15: GetHairOptions API (40 pts)
+ * Case 45: GetHairOptions API (40 pts)
  * Lists all available hair customization options
  */
 public class GetHairOptions {
     
     /**
      * Main execution method for the GetHairOptions API
-     * Can be called from case 15 in switch statement
+     * Can be called from case 45 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Get Hair Options ===");
@@ -38,11 +38,9 @@ public class GetHairOptions {
             stmt = conn.prepareStatement(typeQuery);
             rs = stmt.executeQuery();
             
-            int typeCount = 0;
             while (rs.next()) {
                 String hairType = rs.getString("hairtype");
                 result.append(String.format("  - %s\n", hairType));
-                typeCount++;
             }
             rs.close();
             stmt.close();
@@ -56,17 +54,10 @@ public class GetHairOptions {
             stmt = conn.prepareStatement(colorQuery);
             rs = stmt.executeQuery();
             
-            int colorCount = 0;
             while (rs.next()) {
                 String hairColor = rs.getString("color");
                 result.append(String.format("  - %s\n", hairColor));
-                colorCount++;
             }
-            
-            result.append("\nNote: You can combine any hair type with any hair color.\n");
-            result.append("Total: ").append(typeCount).append(" hair types × ");
-            result.append(colorCount).append(" hair colors = ");
-            result.append(typeCount * colorCount).append(" possible combinations\n");
             
             return result.toString();
             

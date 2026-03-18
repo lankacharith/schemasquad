@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.Scanner;
 import dbconnection.DBConnection;
 
+/**
+ * case 38: list all characters
+ */
 public class ListAllCharacters {
     public static void Client_ListAllCharacters(Scanner scanner) {
         System.out.println("--- List All Characters ---");

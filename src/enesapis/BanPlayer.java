@@ -3,14 +3,14 @@ import java.util.Scanner;
 import java.sql.*;
 
 /**
- * Case 11: BanPlayer API (40 pts)
+ * Case 36: BanPlayer API (40 pts)
  * Bans a player by setting their IsBanned flag to true
  */
 public class BanPlayer {
     
     /**
      * Main execution method for the BanPlayer API
-     * Can be called from case 11 in switch statement
+     * Can be called from case 36 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Ban Player ===");

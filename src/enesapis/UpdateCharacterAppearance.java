@@ -3,14 +3,14 @@ import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Case 18: UpdateCharacterAppearance API (40 pts)
+ * Case 40: UpdateCharacterAppearance API (40 pts)
  * Updates a character's appearance (hair and skin) using foreign key IDs
  */
 public class UpdateCharacterAppearance {
     
     /**
      * Main execution method for the UpdateCharacterAppearance API
-     * Can be called from case 18 in switch statement
+     * Can be called from case 40 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Update Character Appearance ===");

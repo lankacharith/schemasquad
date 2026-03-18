@@ -4,14 +4,14 @@ import java.sql.*;
 import java.util.Scanner;
  
 /**
- * Case 14: ListAllRaces API (40 pts)
+ * Case 41: ListAllRaces API (40 pts)
  * Lists all available character races/species
  */
 public class ListAllRaces {
     
     /**
      * Main execution method for the ListAllRaces API
-     * Can be called from case 14 in switch statement
+     * Can be called from case 41 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== List All Races ===");
@@ -47,8 +47,6 @@ public class ListAllRaces {
             
             if (count == 0) {
                 result.append("No races found.\n");
-            } else {
-                result.append("\nTotal: ").append(count).append(" races\n");
             }
             
             return result.toString();

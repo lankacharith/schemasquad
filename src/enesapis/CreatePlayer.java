@@ -7,14 +7,14 @@ import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Case 9: CreatePlayer API (40 pts)
+ * Case 37: CreatePlayer API (40 pts)
  * Creates a new player account with authentication
  */
 public class CreatePlayer {
     
     /**
      * Main execution method for the CreatePlayer API
-     * Can be called from case 9 in switch statement
+     * Can be called from case 37 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Create Player Account ===");

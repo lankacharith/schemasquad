@@ -3,14 +3,14 @@ import java.sql.*;
 import java.util.Scanner;
 
 /**
- * Case 10: CreateCharacter API (40 pts)
+ * Case 39: CreateCharacter API (60 pts)
  * Creates a new character with customization options and links to player account
  */
 public class CreateCharacter {
     
     /**
      * Main execution method for the CreateCharacter API
-     * Can be called from case 10 in switch statement
+     * Can be called from case 39 in switch statement
      */
     public static void execute(Scanner scanner, Connection conn) {
         System.out.println("\n=== Create Character ===");
