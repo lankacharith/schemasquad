@@ -66,7 +66,8 @@ public class UpdateQuestProgress {
             return "Error: Database error occurred.";
         } finally {
             if (conn != null) {
-                try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                // Don't close the shared connection; project uses a single pooled/shared connection.
+                DBConnection.closeConnection(conn);
             }
         }
     }

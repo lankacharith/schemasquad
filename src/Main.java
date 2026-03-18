@@ -3,9 +3,12 @@
 // To add your API: add a println in printMenu() and a case in the switch below.
 
 import charithapis.*;
+import enesapis.*;
 import giseleapis.*;
 import shreyasapis.*;
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.SQLException;
 import vincentapis.*;
 
 public class Main {
@@ -77,6 +80,59 @@ public class Main {
                 // Character stats
                 case "33": GetCharacterStats.Client_GetCharacterStats(scanner);         break;
                 case "34": UpdateCharacterStats.Client_UpdateCharacterStats(scanner);   break;
+
+                // Accounts & character customization
+                case "35": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) ListAllPlayers.execute(scanner, conn);
+                    break;
+                }
+                case "36": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) BanPlayer.execute(scanner, conn);
+                    break;
+                }
+                case "37": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) CreatePlayer.execute(scanner, conn);
+                    break;
+                }
+                case "38": ListAllCharacters.Client_ListAllCharacters(scanner);         break;
+                case "39": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) CreateCharacter.execute(scanner, conn);
+                    break;
+                }
+                case "40": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) UpdateCharacterAppearance.execute(scanner, conn);
+                    break;
+                }
+                case "41": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) ListAllRaces.execute(scanner, conn);
+                    break;
+                }
+                case "42": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) ListAllSkinColors.execute(scanner, conn);
+                    break;
+                }
+                case "43": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) ListAllClasses.execute(scanner, conn);
+                    break;
+                }
+                case "44": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) ListAllLocations.execute(scanner, conn);
+                    break;
+                }
+                case "45": {
+                    Connection conn = getConnectionOrNull();
+                    if (conn != null) GetHairOptions.execute(scanner, conn);
+                    break;
+                }
 
                 case "0":
                     System.out.println("Goodbye!");
@@ -150,6 +206,20 @@ public class Main {
             " 33. Get Character Stats",
             " 34. Update Character Stats");
 
+        gap();
+        section (" ACCOUNTS & CUSTOMIZATION",
+            "  35. List All Players",
+            "  36. Ban Player",
+            "  37. Create Player",
+            "  38. List All Characters",
+            "  39. Create Character",
+            "  40. Update Appearance",
+            "  41. List All Races",
+            "  42. List All Skin Colors",
+            "  43. List All Classes",
+            "  44. List All Locations",
+            "  45. Get Hair Options");
+
         section("", "  0. Quit");
 
         System.out.print("Enter choice: ");
@@ -180,6 +250,15 @@ public class Main {
     private static String pad(String s, int width) {
         if (s.length() >= width) return s.substring(0, width);
         return s + " ".repeat(width - s.length());
+    }
+
+    private static Connection getConnectionOrNull() {
+        try {
+            return dbconnection.DBConnection.getConnection();
+        } catch (SQLException e) {
+            System.out.println("Error: Unable to connect to the database - " + e.getMessage());
+            return null;
+        }
     }
 
 }

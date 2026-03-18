@@ -3,5 +3,12 @@
 set -e
 cd "$(dirname "$0")"
 mkdir -p out
-javac -d out -cp "lib/postgresql-42.7.10.jar" src/*.java src/dbconnection/*.java src/charithapis/*.java src/giseleapis/*.java src/vincentapis/*.java
+javac -d out -cp "lib/postgresql-42.7.10.jar" \
+  src/*.java \
+  src/dbconnection/*.java \
+  src/charithapis/*.java \
+  src/giseleapis/*.java \
+  src/vincentapis/*.java \
+  src/enesapis/*.java \
+  src/shreyasapis/*.java
 echo "Compiled successfully. Run with: ./run.sh"

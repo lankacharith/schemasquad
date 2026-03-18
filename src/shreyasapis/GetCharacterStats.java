@@ -62,7 +62,8 @@ public class GetCharacterStats {
             return "Error retrieving character stats.";
         } finally {
             if (conn != null) {
-                try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                // Don't close the shared connection; project uses a single pooled/shared connection.
+                dbconnection.DBConnection.closeConnection(conn);
             }
         }
         return sb.toString();

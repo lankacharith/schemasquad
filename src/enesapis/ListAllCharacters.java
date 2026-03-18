@@ -18,11 +18,17 @@ public class ListAllCharacters {
         try {
             conn = DBConnection.getConnection();
 
+            // character table does not store "Level" or "Class" text, so we compute level and join to class name.
             PreparedStatement stmt = conn.prepareStatement(
-                "SELECT c.Name AS CharacterName, c.Level, c.Class " +
-                "FROM Character c " +
-                "JOIN Player p ON c.PlayerID = p.ID " +
-                "WHERE p.Name ILIKE ?");
+                "SELECT " +
+                "  c.name AS CharacterName, " +
+                "  ((c.maxhp + c.maxmp + c.maxstam) / 100) AS CalculatedLevel, " +
+                "  cl.classname AS ClassName " +
+                "FROM character c " +
+                "JOIN player p ON c.playerid = p.username " +
+                "JOIN class cl ON c.classid = cl.id " +
+                "WHERE p.username ILIKE ? " +
+                "ORDER BY c.name");
             stmt.setString(1, playerName);
             ResultSet rs = stmt.executeQuery();
 
@@ -31,9 +37,11 @@ public class ListAllCharacters {
             while (rs.next()) {
                 hasCharacters = true;
                 String charName = rs.getString("CharacterName");
-                int level = rs.getInt("Level");
-                String charClass = rs.getString("Class");
-                result.append("- ").append(charName).append(" (Level ").append(level).append(", ").append(charClass).append(")\n");
+                int level = rs.getInt("CalculatedLevel");
+                String charClass = rs.getString("ClassName");
+                result.append("- ").append(charName)
+                    .append(" (Level ").append(level)
+                    .append(", ").append(charClass).append(")\n");
             }
             stmt.close();
 
@@ -47,7 +55,8 @@ public class ListAllCharacters {
             return "Error: Could not retrieve characters.";
         } finally {
             if (conn != null) {
-                try { conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                // Don't close the shared/pool connection here.
+                DBConnection.closeConnection(conn);
             }
         }
     }
